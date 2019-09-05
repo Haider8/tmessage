@@ -1,20 +1,30 @@
+# python mqtt2.py --user pnijhara
+
 import paho.mqtt.client as mqtt
+import argparse
+
+# Create the parser
+parser = argparse.ArgumentParser(prog='AMU-OSS-MESSAGING',
+                                    description='cli based group messaging for amu-oss sessions',
+                                    epilog='Happy learning !')
+
+# Add the arguments
+parser.add_argument('--user', action='store', type=str, required=True)
+parser.add_argument('--server', action='store', type=str)
+
+args = parser.parse_args()
 
 MQTT_TOPIC = "amu"
-BROKER_ENDPOINT = "192.168.43.235"
+BROKER_ENDPOINT = args.server or "192.168.43.235"
 BROKER_PORT = 1883
 
 
 mqtt_client = mqtt.Client()
-current_msg = ""
-current_user = "Haider8"
+current_user = args.user
 
 def on_message(client, userdata, message):
     current_msg = message.payload.decode("utf-8")
     user = current_msg.partition('[')[-1].rpartition(']')[0]  # to get the username between []
-    if current_msg != message.payload.decode("utf-8"):
-        print(user + current_msg)
-    
     if user != current_user:
         print(current_msg)
 
@@ -25,9 +35,9 @@ def main():
         mqtt_client.subscribe(MQTT_TOPIC)
         mqtt_client.loop_start()
         while True:
-            temperature = str(input())
-            current_msg = temperature
-            mqtt_client.publish(MQTT_TOPIC, temperature)
+            raw_msg = str(input())
+            pub_msg = '[' + current_user + '] ' + raw_msg
+            mqtt_client.publish(MQTT_TOPIC, pub_msg)
     except KeyboardInterrupt:
         mqtt_client.disconnect()
         print('\ngoodbye !')
