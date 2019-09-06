@@ -1,5 +1,3 @@
-# python msg.py --user pnijhara
-
 import paho.mqtt.client as mqtt
 import argparse
 
