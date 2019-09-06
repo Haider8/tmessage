@@ -13,7 +13,7 @@ parser.add_argument('--server', action='store', type=str)
 args = parser.parse_args()
 
 MQTT_TOPIC = "amu"
-BROKER_ENDPOINT = args.server
+BROKER_ENDPOINT = args.server or "test.mosquitto.org"
 BROKER_PORT = 1883
 
 
