@@ -15,7 +15,7 @@ parser.add_argument('--server', action='store', type=str)
 args = parser.parse_args()
 
 MQTT_TOPIC = "amu"
-BROKER_ENDPOINT = args.server or "192.168.43.235"
+BROKER_ENDPOINT = args.server
 BROKER_PORT = 1883
 
 
