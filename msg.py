@@ -42,7 +42,8 @@ def main():
     except KeyboardInterrupt:
         mqtt_client.disconnect()
         print('\ngoodbye !')
-
+    except ConnectionRefusedError:
+        print("\nCant't connect please check your network connection")
 
 if __name__ == '__main__':
     main()
