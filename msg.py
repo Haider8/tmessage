@@ -37,7 +37,10 @@ def main():
         while True:
             raw_msg = str(input())
             pub_msg = '[' + current_user + '] ' + raw_msg
-            mqtt_client.publish(MQTT_TOPIC, pub_msg)
+            if raw_msg != '':
+                mqtt_client.publish(MQTT_TOPIC, pub_msg)
+            else:
+                print("can't send empty message", end='')
     except KeyboardInterrupt:
         mqtt_client.disconnect()
         print('\ngoodbye !')
