@@ -1,5 +1,9 @@
 import paho.mqtt.client as mqtt
 import argparse
+from colorama import init, deinit, reinit, Fore, Back, Style
+
+# Initialize colorama
+init()
 
 # Create the parser
 parser = argparse.ArgumentParser(prog='AMU-OSS-MESSAGING',
@@ -24,7 +28,7 @@ def on_message(client, userdata, message):
     current_msg = message.payload.decode("utf-8")
     user = current_msg.partition('[')[-1].rpartition(']')[0]  # to get the username between []
     if user != current_user:
-        print(current_msg)
+        print(Back.GREEN + Fore.BLACK + current_msg)
 
 def main():
     try:
@@ -33,16 +37,20 @@ def main():
         mqtt_client.subscribe(MQTT_TOPIC)
         mqtt_client.loop_start()
         while True:
-            raw_msg = str(input())
+            raw_msg = str(input(Back.YELLOW + Fore.BLACK))
             pub_msg = '[' + current_user + '] ' + raw_msg
             if raw_msg != '':
                 mqtt_client.publish(MQTT_TOPIC, pub_msg)
             else:
-                print("can't send empty message", end='\n')
+                print(Back.WHITE + Fore.RED + "can't send empty message", end='\n')
     except KeyboardInterrupt:
         mqtt_client.disconnect()
+        Style.RESET_ALL
+        deinit()
         print('\ngoodbye !')
     except ConnectionRefusedError:
+        Style.RESET_ALL
+        deinit()
         print("\nCant't connect please check your network connection")
 
 if __name__ == '__main__':
