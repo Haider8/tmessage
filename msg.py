@@ -9,12 +9,13 @@ parser = argparse.ArgumentParser(prog='AMU-OSS-MESSAGING',
 # Add the arguments
 parser.add_argument('--user', action='store', type=str, required=True)
 parser.add_argument('--server', action='store', type=str)
+parser.add_argument('--port', action='store', type=int)
 
 args = parser.parse_args()
 
 MQTT_TOPIC = "amu"
 BROKER_ENDPOINT = args.server or "test.mosquitto.org"
-BROKER_PORT = 1883
+BROKER_PORT = args.port or 1883
 
 
 mqtt_client = mqtt.Client()
