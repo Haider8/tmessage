@@ -28,7 +28,7 @@ def on_message(client, userdata, message):
     current_msg = message.payload.decode("utf-8")
     user = current_msg.partition('[')[-1].rpartition(']')[0]  # to get the username between []
     if user != current_user:
-        print(Back.GREEN + Fore.BLACK + current_msg)
+        print(Back.GREEN + Fore.BLACK + current_msg + Back.RESET + Fore.RESET + "")
 
 def main():
     try:
@@ -37,7 +37,7 @@ def main():
         mqtt_client.subscribe(MQTT_TOPIC)
         mqtt_client.loop_start()
         while True:
-            raw_msg = str(input(Back.YELLOW + Fore.BLACK))
+            raw_msg = str(input(Back.RESET + Fore.RESET))
             pub_msg = '[' + current_user + '] ' + raw_msg
             if raw_msg != '':
                 mqtt_client.publish(MQTT_TOPIC, pub_msg)
