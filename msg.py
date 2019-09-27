@@ -5,14 +5,16 @@ from colorama import init, deinit, reinit, Fore, Back, Style
 # Initialize colorama
 init()
 
+
 # Create the parser
 parser = argparse.ArgumentParser(prog='AMU-OSS-MESSAGING',
                                     description='cli based group messaging for amu-oss sessions',
                                     epilog='Happy learning !')
-
 # Add the arguments
 parser.add_argument('--user', action='store', type=str, required=True)
+
 parser.add_argument('--server', action='store', type=str)
+
 parser.add_argument('--port', action='store', type=int)
 
 args = parser.parse_args()
