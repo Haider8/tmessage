@@ -1,14 +1,15 @@
 import paho.mqtt.client as mqtt
 import argparse
-from colorama import init, deinit, reinit, Fore, Back, Style
+from colorama import init, deinit, Fore, Back, Style
 
 # Initialize colorama
 init()
 
 # Create the parser
 parser = argparse.ArgumentParser(prog='AMU-OSS-MESSAGING',
-                                    description='cli based group messaging for amu-oss sessions',
-                                    epilog='Happy learning !')
+                                 description='cli based group messaging\
+                                 for amu-oss sessions',
+                                 epilog='Happy learning !')
 
 # Add the arguments
 parser.add_argument('--user', action='store', type=str, required=True)
@@ -25,11 +26,16 @@ BROKER_PORT = args.port or 1883
 mqtt_client = mqtt.Client()
 current_user = args.user
 
+
 def on_message(client, userdata, message):
     current_msg = message.payload.decode("utf-8")
-    user = current_msg.partition('[')[-1].rpartition(']')[0]  # to get the username between []
+
+    # to get the username between []
+    user = current_msg.partition('[')[-1].rpartition(']')[0]
     if user != current_user:
-        print(Back.GREEN + Fore.BLACK + current_msg + Back.RESET + Fore.RESET + "")
+        print(Back.GREEN + Fore.BLACK + current_msg +
+              Back.RESET + Fore.RESET + "")
+
 
 def main():
     try:
@@ -43,7 +49,8 @@ def main():
             if raw_msg != '':
                 mqtt_client.publish(MQTT_TOPIC, pub_msg)
             else:
-                print(Back.WHITE + Fore.RED + "can't send empty message", end='\n')
+                print(Back.WHITE + Fore.RED +
+                      "can't send empty message", end='\n')
     except KeyboardInterrupt:
         mqtt_client.disconnect()
         Style.RESET_ALL
