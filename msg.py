@@ -25,7 +25,9 @@ BROKER_PORT = args.port or 1883
 
 
 mqtt_client = mqtt.Client()
+
 current_user = args.user
+
 
 def on_message(client, userdata, message):
     current_msg = message.payload.decode("utf-8")
