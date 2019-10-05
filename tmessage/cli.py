@@ -37,6 +37,12 @@ def on_message(client, userdata, message):
         print(Back.GREEN + Fore.BLACK + current_msg +
               Back.RESET + Fore.RESET + "")
 
+def store_messages(raw_msg):
+    f = open('messages/message.txt', 'a')
+    f.write('%s\\t' % datetime.now().strftime('%Y-%m-%d %H:%M'))
+    f.write('%s\t' % current_user)
+    f.write('%s\n' % raw_msg)
+    f.close()
 
 def main():
     try:
@@ -49,11 +55,7 @@ def main():
             pub_msg = '[' + current_user + '] ' + raw_msg
             if raw_msg != '':
                 mqtt_client.publish(MQTT_TOPIC, pub_msg)
-                f = open('messages.txt', 'a')
-                f.write('%s\t' %datetime.now().strftime('%Y-%m-%d %H:%M'))
-                f.write('%s\t' % current_user)
-                f.write('%s\n' % raw_msg)
-                f.close()
+                store_messages(raw_msg)
             else:
                 print(Back.WHITE + Fore.RED +
                       "can't send empty message", end='\n')
