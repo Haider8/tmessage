@@ -38,21 +38,21 @@ def on_message(client, userdata, message):
         print(Back.GREEN + Fore.BLACK + current_msg +
               Back.RESET + Fore.RESET + "")
 
+
 folder_name = 'messages'
 session_start_date = datetime.now().strftime('%Y-%m-%d_%H:%M')
 
+
 def store_messages(raw_msg):
-    try:
-        if not os.path.exists(folder_name):
-            os.mkdir(folder_name)
-    except:
-        pass
+    if not os.path.exists(folder_name):
+        os.mkdir(folder_name)
 
     f = open('messages/{}.txt'.format(session_start_date), 'a')
     f.write('%s\t' % datetime.now().strftime('%Y-%m-%d %H:%M'))
     f.write('%s\t' % current_user)
     f.write('%s\n' % raw_msg)
     f.close()
+
 
 def main():
     try:
