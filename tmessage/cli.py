@@ -37,6 +37,7 @@ def on_message(client, userdata, message):
     if user != current_user:
         print(Back.GREEN + Fore.BLACK + current_msg +
               Back.RESET + Fore.RESET + "")
+        store_messages(current_msg)
 
 
 folder_name = 'messages'
