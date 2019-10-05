@@ -1,6 +1,7 @@
 import paho.mqtt.client as mqtt
 import argparse
 from colorama import init, deinit, Fore, Back, Style
+from datetime import datetime
 
 # Initialize colorama
 init()
@@ -48,6 +49,11 @@ def main():
             pub_msg = '[' + current_user + '] ' + raw_msg
             if raw_msg != '':
                 mqtt_client.publish(MQTT_TOPIC, pub_msg)
+                f = open('messages.txt', 'a')
+                f.write('%s\t' %datetime.now().strftime('%Y-%m-%d %H:%M'))
+                f.write('%s\t' % current_user)
+                f.write('%s\n' % raw_msg)
+                f.close()
             else:
                 print(Back.WHITE + Fore.RED +
                       "can't send empty message", end='\n')
