@@ -1,6 +1,9 @@
 import paho.mqtt.client as mqtt
 import argparse
 from colorama import init, deinit, Fore, Back, Style
+from datetime import datetime
+import os
+import json
 import auth  # auth.py
 
 # Initialize colorama
@@ -36,6 +39,26 @@ def on_message(client, userdata, message):
     if user != current_user:
         print(Back.GREEN + Fore.BLACK + current_msg +
               Back.RESET + Fore.RESET + "")
+        _, _, message = current_msg.partition('] ')
+        store_messages(user, message)
+
+
+folder_name = 'messages'
+session_start_date = datetime.now().strftime('%Y-%m-%d_%H:%M')
+
+data = {}
+
+
+def store_messages(user, raw_msg):
+    if not os.path.exists(folder_name):
+        os.mkdir(folder_name)
+
+    data['time'] = datetime.now().strftime('%Y-%m-%d %H:%M')
+    data['content'] = raw_msg
+    data['from'] = user
+
+    with open('messages/{}.json'.format(session_start_date), 'a', encoding='utf-8') as outfile:
+        json.dump(data, outfile, ensure_ascii=False, indent=4)
 
 
 def main():
@@ -67,6 +90,7 @@ def main():
             pub_msg = f'[{user_name}] {displayed_name}: {raw_msg}'
             if raw_msg != '':
                 mqtt_client.publish(MQTT_TOPIC, pub_msg)
+                store_messages(current_user, raw_msg)
             else:
                 print(Back.WHITE + Fore.RED +
                       "Can't send empty message", end='\n')
