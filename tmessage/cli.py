@@ -53,7 +53,7 @@ def main():
                 password = input(f'Enter password: ')
                 password_confirm = input(f'Re-enter password: ')
             payload = auth.register(current_user, displayed_name,
-                                        password, password_confirm)
+                                    password, password_confirm)
         print('User Authorized')
         user_name = payload["user_name"]
         displayed_name = payload["displayed_name"]
