@@ -4,7 +4,7 @@ import requests as r
 import dotenv as env
 env.load_dotenv()
 
-API_BASE_URL = os.environ.get("TMESSAGE_API_URL") or "http://localhost:8080"
+API_BASE_URL = os.environ.get("TMESSAGE_API_URL") or "https://peaceful-waters-15584.herokuapp.com"
 API_USER_URL = f'{API_BASE_URL}/api/user'
 
 

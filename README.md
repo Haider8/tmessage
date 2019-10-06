@@ -15,14 +15,16 @@
 * Switch to your venv using ```source venv/bin/activate```
 * Now install the required dependencies by running ```pip install .```
 * Now to run tmessage use ```tmessage --user [YOUR USERNAME] --port [PORT (optional)] --server [YOUR BROKER IP OR URL (optional)]```
+* To test this you can open different terminal tabs.
 
+### Some optional instructions for PROs ;)
+* If you don't want to create your own broker it's perfectly fine as tmessage is using a default broker ```test.mosquitto.org```. Therefore, you can then run tmessage using ```python msg.py --user [YOUR USERNAME]```.
 
-#### NOTE: If you don't want to create your own broker it's perfectly fine as tmessage is using a default broker ```test.mosquitto.org```. Therefore, you can then run tmessage using ```python msg.py --user [YOUR USERNAME]```.
-
-If you happen to use this on a different port, it can be specified as - 
+* If you happen to use this on a different port, it can be specified as - 
 ```tmessage --user [USERNAME] --port [PORT]```. If omitted, it defaults to 1883.
 
-#### To test this you can open different terminal tabs of course.
+* This project uses an [API](https://github.com/Haider8/tmessage-api) for the authentication of users. Default API Url is [this](https://peaceful-waters-15584.herokuapp.com). If you want to use your own authentication API you can deploy our [tmessage-api](https://github.com/Haider8/tmessage-api) locally(for testing) or on some cloud (the default API is hosted on Heroku). Then, you can set that Url in `.env` file like this `TMESSAGE_API_URL=http://localhost:8080` or `TMESSAGE_API_URL=<your-api-url>`.
+
 
 ### Development Instructions
 
