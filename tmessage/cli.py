@@ -52,8 +52,11 @@ def main():
                 print('Passwords do not match, please try again...')
                 password = input(f'Enter password: ')
                 password_confirm = input(f'Re-enter password: ')
-            payload = auth.register(current_user, displayed_name, password, password_confirm)
+            payload = auth.register(current_user, displayed_name,
+                                        password, password_confirm)
         print('User Authorized')
+        user_name = payload["user_name"]
+        displayed_name = payload["displayed_name"]
 
         mqtt_client.on_message = on_message
         mqtt_client.connect(BROKER_ENDPOINT, BROKER_PORT)
@@ -61,12 +64,12 @@ def main():
         mqtt_client.loop_start()
         while True:
             raw_msg = str(input(Back.RESET + Fore.RESET))
-            pub_msg = f'[{payload["user_name"]}] {payload["displayed_name"]}: {raw_msg}'
+            pub_msg = f'[{user_name}] {displayed_name}: {raw_msg}'
             if raw_msg != '':
                 mqtt_client.publish(MQTT_TOPIC, pub_msg)
             else:
                 print(Back.WHITE + Fore.RED +
-                      "can't send empty message", end='\n')
+                      "Can't send empty message", end='\n')
     except KeyboardInterrupt:
         mqtt_client.disconnect()
         Style.RESET_ALL
@@ -75,7 +78,7 @@ def main():
     except ConnectionRefusedError:
         Style.RESET_ALL
         deinit()
-        print("\nCant't connect please check your network connection")
+        print("\nCan't connect please check your network connection")
     except Exception as err:
         Style.RESET_ALL
         deinit()
