@@ -1,7 +1,7 @@
 import paho.mqtt.client as mqtt
 import argparse
 from colorama import init, deinit, Fore, Back, Style
-import auth # auth.py
+import auth  # auth.py
 
 # Initialize colorama
 init()
@@ -61,7 +61,6 @@ def main():
         mqtt_client.loop_start()
         while True:
             raw_msg = str(input(Back.RESET + Fore.RESET))
-            #pub_msg = '[' + current_user + '] ' + raw_msg
             pub_msg = f'[{payload["user_name"]}] {payload["displayed_name"]}: {raw_msg}'
             if raw_msg != '':
                 mqtt_client.publish(MQTT_TOPIC, pub_msg)
@@ -81,6 +80,7 @@ def main():
         Style.RESET_ALL
         deinit()
         print(f'\n{err}')
+
 
 if __name__ == "__main__":
     main()
