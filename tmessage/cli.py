@@ -4,7 +4,7 @@ from colorama import init, deinit, Fore, Back, Style
 from datetime import datetime
 import os
 import json
-import auth  # auth.py
+import tmessage.auth as auth  # auth.py
 
 # Initialize colorama
 init()
