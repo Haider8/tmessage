@@ -1,3 +1,4 @@
+""" Auth : Register new user, check or authenticate existing user """
 import os
 import jwt
 import requests as r
@@ -9,6 +10,7 @@ API_USER_URL = f'{API_BASE_URL}/api/user'
 
 
 def check_existed(user_name):
+    """ Check if  user already exist """
     endpoint_url = f'{API_USER_URL}/checkExist/{user_name}'
     response = r.get(endpoint_url)
     if response.status_code == 200:
@@ -19,6 +21,7 @@ def check_existed(user_name):
 
 
 def authenticate(user_name, password):
+    """ Authenticate already registered User """
     endpoint_url = f'{API_USER_URL}/login'
     headers = {
         "Content-Type": "application/json"
@@ -36,6 +39,7 @@ def authenticate(user_name, password):
 
 
 def register(user_name, displayed_name, password, password_confirm):
+    """ Register a new User """
     endpoint_url = f'{API_USER_URL}/register'
     headers = {
         "Content-Type": "application/json"

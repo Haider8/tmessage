@@ -1,3 +1,4 @@
+""" CLI:Register user or auth already registered user to Send, Receive or Store Messages """
 import os
 import json
 import argparse
@@ -35,6 +36,7 @@ CURRENT_USER = ARGS.user
 
 
 def on_message(client, userdata, message):
+    """ callback functions to Process any Messages"""
     current_msg = message.payload.decode("utf-8")
 
     # to get the username between []
@@ -54,6 +56,7 @@ DATA = {}
 
 
 def store_messages(user, raw_msg):
+    """ Store messages in JSON file """
     if not os.path.exists(FOLDER_NAME):
         os.mkdir(FOLDER_NAME)
 
@@ -66,6 +69,7 @@ def store_messages(user, raw_msg):
 
 
 def main():
+    """ Register a new User or Authenticates the already registered User to send message """
     try:
         if auth.check_existed(CURRENT_USER):
             password = input(f'User {CURRENT_USER} found\nEnter password: ')
