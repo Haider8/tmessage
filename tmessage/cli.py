@@ -19,9 +19,7 @@ parser = argparse.ArgumentParser(prog='AMU-OSS-MESSAGING',
 parser.add_argument('--user', action='store', type=str, required=True)
 parser.add_argument('--server', action='store', type=str)
 parser.add_argument('--port', action='store', type=int)
-parser.add_argument('--store',
-                    action='store_true',
-                    help='Store messages in JSON format.')
+parser.add_argument('--store', action='store_true', help='Store messages in JSON format.')
 
 args = parser.parse_args()
 
