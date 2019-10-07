@@ -1,7 +1,6 @@
 language: python
 python:
   - "3.7"
-before_script: "git clone https://github.com/Shanmugapriya03/tmessage.git"
 install: "pip install -r requirements.txt"
 # command to run tests
 script: pylint **/*.py
