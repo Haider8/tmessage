@@ -2,8 +2,8 @@ from setuptools import setup
 
 
 def get_requirements():
-    with open('requirements.txt', 'r') as f:
-        raw_requirements = f.readlines()
+    with open('requirements.txt', 'r') as file:
+        raw_requirements = file.readlines()
     requirements = [requirement.strip() for requirement in raw_requirements]
     return requirements
 
