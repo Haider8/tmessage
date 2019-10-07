@@ -13,7 +13,7 @@ init()
 parser = argparse.ArgumentParser(prog='AMU-OSS-MESSAGING',
                                  description='cli based group messaging\
                                  for amu-oss sessions',
-                                 epilog='Happy learning !')
+                                 epilog='Happy learning!')
 
 # Add the arguments
 parser.add_argument('--user', action='store', type=str, required=True)
@@ -102,7 +102,7 @@ def main():
         mqtt_client.disconnect()
         Style.RESET_ALL
         deinit()
-        print('\ngoodbye !')
+        print('\nGoodbye!')
     except ConnectionRefusedError:
         Style.RESET_ALL
         deinit()
