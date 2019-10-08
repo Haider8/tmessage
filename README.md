@@ -14,7 +14,8 @@
 * Setup your python3 virtual environment using this command ```virtualenv -p python3 venv```
 * Switch to your venv using ```source venv/bin/activate```
 * Now install the required dependencies by running ```pip install .```
-* Now to run tmessage use ```tmessage --user [YOUR USERNAME] --port [PORT (optional)] --server [YOUR BROKER IP OR URL (optional)]```
+* Now to run tmessage use ```tmessage --user [YOUR USERNAME] --port [PORT (optional)] --server [YOUR BROKER IP OR URL (optional)] --dont-store (optional)```
+* By default, messages are stored in JSON format in the messages folder. To turn this feature off, simply use the `--dont-store` argument.
 * To test this you can open different terminal tabs.
 
 ### Some optional instructions for PROs ;)

@@ -27,7 +27,7 @@ setup(name='tmessage',
       url="https://github.com/Haider8/tmessage",
       license="GPL-3.0",
       entry_points={
-        'console_scripts': ['tmessage=tmessage.cli:main']
+          'console_scripts': ['tmessage=tmessage.cli:main']
       },
       description="""
       This is a lightweight and low bandwidth
