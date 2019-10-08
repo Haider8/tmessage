@@ -1,3 +1,5 @@
+#!python
+
 import os
 import jwt
 import requests as r

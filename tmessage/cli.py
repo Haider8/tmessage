@@ -1,3 +1,5 @@
+#!python
+
 import paho.mqtt.client as mqtt
 import argparse
 from colorama import init, deinit, Fore, Back, Style
