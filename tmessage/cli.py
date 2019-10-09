@@ -115,7 +115,7 @@ def main():
         Style.RESET_ALL
         deinit()
         print("\nCan't connect please check your network connection")
-    except Exception as err: # pylint: disable=broad-except
+    except Exception as err:  # pylint: disable=broad-except
         # pylint: disable=pointless-statement
         Style.RESET_ALL
         deinit()
