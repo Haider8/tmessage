@@ -36,6 +36,7 @@ CURRENT_USER = ARGS.user
 
 
 def on_message(client, userdata, message):
+    # pylint: disable=unused-argument
     """ callback functions to Process any Messages"""
     current_msg = message.payload.decode("utf-8")
 
@@ -104,15 +105,18 @@ def main():
                 print(Back.WHITE + Fore.RED +
                       "Can't send empty message", end='\n')
     except KeyboardInterrupt:
+        # pylint: disable=pointless-statement
         MQTT_CLIENT.disconnect()
         Style.RESET_ALL
         deinit()
         print('\nGoodbye!')
     except ConnectionRefusedError:
+        # pylint: disable=pointless-statement
         Style.RESET_ALL
         deinit()
         print("\nCan't connect please check your network connection")
-    except Exception as err:
+    except Exception as err: # pylint: disable=broad-except
+        # pylint: disable=pointless-statement
         Style.RESET_ALL
         deinit()
         print(f'\n{err}')
