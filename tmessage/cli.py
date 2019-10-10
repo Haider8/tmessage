@@ -1,13 +1,12 @@
 """ CLI:Register user or auth already registered user to Send, Receive or Store Messages """
-import os
-import json
 import argparse
-from datetime import datetime
-import paho.mqtt.client as mqtt
 from colorama import init, deinit, Fore, Back, Style
+import paho.mqtt.client as mqtt
 import tmessage.auth as auth  # auth.py
 
 # Initialize colorama
+from tmessage.db import store_messages
+
 init()
 
 # Create the parser
@@ -48,25 +47,6 @@ def on_message(client, userdata, message):
         _, _, message = current_msg.partition('] ')
         if IS_STORE:
             store_messages(user, message)
-
-
-FOLDER_NAME = 'messages'
-SESSION_START_DATE = datetime.now().strftime('%Y-%m-%d_%H:%M')
-
-DATA = {}
-
-
-def store_messages(user, raw_msg):
-    """ Store messages in JSON file """
-    if not os.path.exists(FOLDER_NAME):
-        os.mkdir(FOLDER_NAME)
-
-    DATA['time'] = datetime.now().strftime('%Y-%m-%d %H:%M')
-    DATA['content'] = raw_msg
-    DATA['from'] = user
-
-    with open('messages/{}.json'.format(SESSION_START_DATE), 'a', encoding='utf-8') as outfile:
-        json.dump(DATA, outfile, ensure_ascii=False, indent=4)
 
 
 def main():
