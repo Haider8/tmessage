@@ -11,6 +11,7 @@ def get_requirements():
     requirements = [
         'colorama==0.4.1',
         'paho-mqtt==1.4.0',
+        'peewee==3.11.2',
         'requests==2.22.0',
         'PyJWT==1.7.1',
         'python-dotenv==0.10.3'
