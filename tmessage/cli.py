@@ -1,12 +1,14 @@
 """ CLI:Register user or auth already registered user to Send, Receive or Store Messages """
 import argparse
-from colorama import init, deinit, Fore, Back, Style
+from getpass import getpass
+from datetime import datetime
 import paho.mqtt.client as mqtt
+from colorama import init, deinit, Fore, Back, Style
 import tmessage.auth as auth  # auth.py
+from tmessage.db import store_messages  # db.py
+
 
 # Initialize colorama
-from tmessage.db import store_messages
-
 init()
 
 # Create the parser
@@ -53,17 +55,17 @@ def main():
     """ Register a new User or Authenticates the already registered User to send message """
     try:
         if auth.check_existed(CURRENT_USER):
-            password = input(f'User {CURRENT_USER} found\nEnter password: ')
+            password = getpass(f'User {CURRENT_USER} found\nEnter password: ')
             payload = auth.authenticate(CURRENT_USER, password)
         else:
             print(f'Welcome {CURRENT_USER} to tmessage!\nPlease register...')
-            displayed_name = input(f'Enter your name used for display: ')
-            password = input(f'Enter password: ')
-            password_confirm = input(f'Re-enter password: ')
+            displayed_name = input('Enter your name used for display: ')
+            password = getpass('Enter password: ')
+            password_confirm = getpass('Re-enter password: ')
             while password != password_confirm:
                 print('Passwords do not match, please try again...')
-                password = input(f'Enter password: ')
-                password_confirm = input(f'Re-enter password: ')
+                password = getpass('Enter password: ')
+                password_confirm = getpass('Re-enter password: ')
             payload = auth.register(CURRENT_USER, displayed_name,
                                     password, password_confirm)
         print('User Authorized')
