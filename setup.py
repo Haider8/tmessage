@@ -11,6 +11,7 @@ def get_requirements():
     requirements = [
         'colorama==0.4.1',
         'paho-mqtt==1.4.0',
+        'peewee==3.11.2',
         'requests==2.22.0',
         'PyJWT==1.7.1',
         'python-dotenv==0.10.3'
@@ -35,8 +36,8 @@ setup(name='tmessage',
       communication right from your terminal.
       """,
       classifiers=[
-        "Programming Language :: Python :: 3",
-        "Operating System :: OS Independent",
+          "Programming Language :: Python :: 3",
+          "Operating System :: OS Independent",
       ],
       python_requires='>=3.4',
       packages=['tmessage'],
