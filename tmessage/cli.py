@@ -1,11 +1,11 @@
 """ CLI:Register user or auth already registered user to Send, Receive or Store Messages """
-import os
-import json
 import argparse
-from datetime import datetime
+from getpass import getpass
 import paho.mqtt.client as mqtt
 from colorama import init, deinit, Fore, Back, Style
 import tmessage.auth as auth  # auth.py
+from tmessage.db import store_messages  # db.py
+
 
 # Initialize colorama
 init()
@@ -36,6 +36,7 @@ CURRENT_USER = ARGS.user
 
 
 def on_message(client, userdata, message):
+    # pylint: disable=unused-argument
     """ callback functions to Process any Messages"""
     current_msg = message.payload.decode("utf-8")
 
@@ -49,40 +50,21 @@ def on_message(client, userdata, message):
             store_messages(user, message)
 
 
-FOLDER_NAME = 'messages'
-SESSION_START_DATE = datetime.now().strftime('%Y-%m-%d_%H:%M')
-
-DATA = {}
-
-
-def store_messages(user, raw_msg):
-    """ Store messages in JSON file """
-    if not os.path.exists(FOLDER_NAME):
-        os.mkdir(FOLDER_NAME)
-
-    DATA['time'] = datetime.now().strftime('%Y-%m-%d %H:%M')
-    DATA['content'] = raw_msg
-    DATA['from'] = user
-
-    with open('messages/{}.json'.format(SESSION_START_DATE), 'a', encoding='utf-8') as outfile:
-        json.dump(DATA, outfile, ensure_ascii=False, indent=4)
-
-
 def main():
     """ Register a new User or Authenticates the already registered User to send message """
     try:
         if auth.check_existed(CURRENT_USER):
-            password = input(f'User {CURRENT_USER} found\nEnter password: ')
+            password = getpass(f'User {CURRENT_USER} found\nEnter password: ')
             payload = auth.authenticate(CURRENT_USER, password)
         else:
             print(f'Welcome {CURRENT_USER} to tmessage!\nPlease register...')
-            displayed_name = input(f'Enter your name used for display: ')
-            password = input(f'Enter password: ')
-            password_confirm = input(f'Re-enter password: ')
+            displayed_name = input('Enter your name used for display: ')
+            password = getpass('Enter password: ')
+            password_confirm = getpass('Re-enter password: ')
             while password != password_confirm:
                 print('Passwords do not match, please try again...')
-                password = input(f'Enter password: ')
-                password_confirm = input(f'Re-enter password: ')
+                password = getpass('Enter password: ')
+                password_confirm = getpass('Re-enter password: ')
             payload = auth.register(CURRENT_USER, displayed_name,
                                     password, password_confirm)
         print('User Authorized')
@@ -116,15 +98,18 @@ def main():
                 print(Back.WHITE + Fore.RED +
                       "Can't send empty message", end='\n')
     except KeyboardInterrupt:
+        # pylint: disable=pointless-statement
         MQTT_CLIENT.disconnect()
         Style.RESET_ALL
         deinit()
         print('\nGoodbye!')
     except ConnectionRefusedError:
+        # pylint: disable=pointless-statement
         Style.RESET_ALL
         deinit()
         print("\nCan't connect please check your network connection")
-    except Exception as err:
+    except Exception as err:  # pylint: disable=broad-except
+        # pylint: disable=pointless-statement
         Style.RESET_ALL
         deinit()
         print(f'\n{err}')
