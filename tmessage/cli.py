@@ -1,7 +1,6 @@
 """ CLI:Register user or auth already registered user to Send, Receive or Store Messages """
 import argparse
 from getpass import getpass
-from datetime import datetime
 import paho.mqtt.client as mqtt
 from colorama import init, deinit, Fore, Back, Style
 import tmessage.auth as auth  # auth.py
