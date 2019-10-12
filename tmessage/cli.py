@@ -94,12 +94,24 @@ def main():
         MQTT_CLIENT.subscribe(MQTT_TOPIC)
         MQTT_CLIENT.loop_start()
         while True:
-            raw_msg = str(input(Back.RESET + Fore.RESET))
+            user_input = input(Back.RESET + Fore.RESET)
+            raw_msg = str(user_input)
             pub_msg = f'[{user_name}] {displayed_name}: {raw_msg}'
             if raw_msg != '':
-                MQTT_CLIENT.publish(MQTT_TOPIC, pub_msg)
-                if IS_STORE:
-                    store_messages(CURRENT_USER, raw_msg)
+                if raw_msg.startswith("/display-name"):
+                    input_tokens = user_input.split()
+                    if len(input_tokens) >= 2:
+                        input_tokens.pop(0)
+                        new_display_name = " ".join(input_tokens)
+                        change_response = auth.change_display_name(user_name, new_display_name)
+                        displayed_name = change_response["displayed_name"]
+                    else:
+                        print(Back.WHITE + Fore.RED +
+                      "A new display name is missing", end='\n')
+                else:
+                    MQTT_CLIENT.publish(MQTT_TOPIC, pub_msg)
+                    if IS_STORE:
+                        store_messages(CURRENT_USER, raw_msg)
             else:
                 print(Back.WHITE + Fore.RED +
                       "Can't send empty message", end='\n')
