@@ -50,6 +50,19 @@ def on_message(client, userdata, message):
             store_messages(user, message)
 
 
+def change_display_name(user_name, user_input):
+    input_tokens = user_input.split()
+    if len(input_tokens) >= 2:
+        input_tokens.pop(0)
+        new_display_name = " ".join(input_tokens)
+        change_response = auth.change_display_name(user_name, new_display_name)
+        print(change_response)
+        return change_response["displayed_name"]
+    else:
+        print(Back.WHITE + Fore.RED +
+            "A new display name is missing", end='\n')
+
+
 def main():
     """ Register a new User or Authenticates the already registered User to send message """
     try:
@@ -78,19 +91,11 @@ def main():
         while True:
             user_input = input(Back.RESET + Fore.RESET)
             raw_msg = str(user_input)
-            pub_msg = f'[{user_name}] {displayed_name}: {raw_msg}'
             if raw_msg != '':
                 if raw_msg.startswith("/display-name"):
-                    input_tokens = user_input.split()
-                    if len(input_tokens) >= 2:
-                        input_tokens.pop(0)
-                        new_display_name = " ".join(input_tokens)
-                        change_response = auth.change_display_name(user_name, new_display_name)
-                        displayed_name = change_response["displayed_name"]
-                    else:
-                        print(Back.WHITE + Fore.RED +
-                      "A new display name is missing", end='\n')
+                    displayed_name = change_display_name(user_name, user_input)
                 else:
+                    pub_msg = f'[{user_name}] {displayed_name}: {raw_msg}'
                     MQTT_CLIENT.publish(MQTT_TOPIC, pub_msg)
                     if IS_STORE:
                         store_messages(CURRENT_USER, raw_msg)
