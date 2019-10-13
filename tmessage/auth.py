@@ -56,3 +56,21 @@ def register(user_name, displayed_name, password, password_confirm):
         return jwt.decode(data['token'], verify=False)
     error = response.json()
     raise Exception(f'Error Registering User: {error["message"]}')
+
+
+def change_display_name(user_name, displayed_name):
+    """ Change display name of a user """
+    endpoint_url = f'{API_USER_URL}/changeDisplayName'
+    headers = {
+        "Content-Type": "application/json"
+    }
+    changed_user = {
+        "user_name": user_name,
+        "displayed_name": displayed_name
+    }
+    response = r.post(endpoint_url, json=changed_user, headers=headers)
+    if response.status_code == 200:
+        data = response.json()
+        return jwt.decode(data['token'], verify=False)
+    error = response.json()
+    raise Exception(f'Error changing the display name: {error["message"]}')
