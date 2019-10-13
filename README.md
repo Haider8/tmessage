@@ -1,4 +1,5 @@
 # tmessage
+[![Build Status](https://travis-ci.com/Haider8/tmessage.svg?branch=master)](https://travis-ci.com/Haider8/tmessage)
 ## This is a lightweight and low bandwidth CLI tool which can be used for group communication right from your terminal (isn't this cool ; ) )
 
 
