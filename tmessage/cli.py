@@ -8,7 +8,6 @@ from tmessage.db import store_messages  # db.py
 from tmessage.utils import get_formatted_message
 from simple_chalk import chalk
 
-
 # Initialize colorama
 init()
 
@@ -35,7 +34,6 @@ MQTT_TOPIC = "amu"
 BROKER_ENDPOINT = ARGS.server or "test.mosquitto.org"
 BROKER_PORT = ARGS.port or 1883
 
-
 MQTT_CLIENT = mqtt.Client()
 CURRENT_USER = ARGS.user
 
@@ -50,7 +48,7 @@ def on_message(client, userdata, message):
 
     user_name_separator_index = current_msg.find(":") + 1
     user_details = chalk.bgGreen(current_msg[:user_name_separator_index])
-    msg = current_msg[user_name_separator_index + 1 :]
+    msg = current_msg[user_name_separator_index + 1:]
     if user != CURRENT_USER:
         print(user_details, msg)
         _, _, message = current_msg.partition("] ")
