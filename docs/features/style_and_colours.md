@@ -7,6 +7,9 @@ You can style as well as colour the text and background of your message in `tmes
 ### Bold
 `<bold>Hello</bold>` will send the message in bold.
 
+### Dim
+`<dim>Hello</dim>` will send the message in dim text.
+
 ## Colours
 
 ### Font colors
