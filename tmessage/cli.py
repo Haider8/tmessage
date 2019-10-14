@@ -4,7 +4,8 @@ from getpass import getpass
 import paho.mqtt.client as mqtt
 from colorama import init, deinit, Fore, Back, Style
 import tmessage.auth as auth  # auth.py
-from tmessage.db import store_messages  # db.py
+from db import *
+"""from tmessage.db import grab_messages, store_messages  # db.py"""
 
 
 # Initialize colorama
@@ -80,8 +81,12 @@ def main():
             pub_msg = f'[{user_name}] {displayed_name}: {raw_msg}'
             if raw_msg != '':
                 MQTT_CLIENT.publish(MQTT_TOPIC, pub_msg)
+                if raw_msg == "grab":
+                    grab_messages(CURRENT_USER)
                 if IS_STORE:
                     store_messages(CURRENT_USER, raw_msg)
+                   
+            
             else:
                 print(Back.WHITE + Fore.RED +
                       "Can't send empty message", end='\n')
