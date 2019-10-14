@@ -16,8 +16,6 @@ class Message(Model):
     class Meta:  # pylint: disable=missing-class-docstring,too-few-public-methods
         database = MESSAGES_DB
 
-
-
 @MESSAGES_DB
 def grab_messages(user):
     """Grab messages from the user"""
@@ -25,7 +23,6 @@ def grab_messages(user):
     for row in cursor.fetchall():
        print(row[0] + " : " + row[1])
     
-
 @MESSAGES_DB
 def store_messages(user, raw_msg):
     """Store a message sent by the indicated user in the database"""
