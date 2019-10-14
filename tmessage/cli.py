@@ -4,8 +4,7 @@ from getpass import getpass
 import paho.mqtt.client as mqtt
 from colorama import init, deinit, Fore, Back, Style
 import tmessage.auth as auth  # auth.py
-from db import *
-"""from tmessage.db import grab_messages, store_messages  # db.py"""
+from tmessage.db import grab_messages, store_messages  # db.py"""
 
 
 # Initialize colorama
