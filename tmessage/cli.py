@@ -84,8 +84,6 @@ def main():
                     grab_messages(CURRENT_USER)
                 if IS_STORE:
                     store_messages(CURRENT_USER, raw_msg)
-                   
-            
             else:
                 print(Back.WHITE + Fore.RED +
                       "Can't send empty message", end='\n')
