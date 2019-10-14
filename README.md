@@ -19,6 +19,10 @@
 * By default, messages are stored in a SQLite database. To turn this feature off, simply use the `--dont-store` argument.
 * To test this you can open different terminal tabs.
 
+### Features
+
+* [Message text style and colours](docs/features/style_and_colours.md)
+
 ### Some optional instructions for PROs ;)
 * If you don't want to create your own broker it's perfectly fine as tmessage is using a default broker ```test.mosquitto.org```. Therefore, you can then run tmessage using ```python msg.py --user [YOUR USERNAME]```.
 
