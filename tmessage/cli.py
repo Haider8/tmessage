@@ -5,8 +5,8 @@ import paho.mqtt.client as mqtt
 from colorama import init, deinit, Fore, Back, Style
 import tmessage.auth as auth  # auth.py
 from tmessage.db import store_messages  # db.py
-from tmessage.utils import get_formatted_message
 from simple_chalk import chalk
+from tmessage.utils import get_formatted_message
 
 # Initialize colorama
 init()

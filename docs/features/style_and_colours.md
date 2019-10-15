@@ -1,4 +1,4 @@
-#Message text style and colours
+# Message text style and colours
 
 You can style as well as colour the text and background of your message in `tmessage`.
 
