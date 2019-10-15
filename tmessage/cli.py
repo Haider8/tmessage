@@ -3,9 +3,9 @@ import argparse
 from getpass import getpass
 import paho.mqtt.client as mqtt
 from colorama import init, deinit, Fore, Back, Style
+from simple_chalk import chalk
 import tmessage.auth as auth  # auth.py
 from tmessage.db import store_messages  # db.py
-from simple_chalk import chalk
 from tmessage.utils import get_formatted_message
 
 # Initialize colorama

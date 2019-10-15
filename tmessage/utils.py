@@ -37,7 +37,8 @@ class MessageParser(HTMLParser):
     def handle_data(self, data):
         if self.method_call_list:
             method_to_call = "chalk." + ".".join(self.method_call_list)
-            self.message_to_show += eval(method_to_call + '("' + data + '")')  # pylint: disable=eval-used
+            # pylint: disable=eval-used
+            self.message_to_show += eval(method_to_call + '("' + data + '")')
         else:
             self.message_to_show += data
 
