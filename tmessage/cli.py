@@ -82,8 +82,8 @@ def main():
                 MQTT_CLIENT.publish(MQTT_TOPIC, pub_msg)
                 if raw_msg == "grab":
                     query = grab_messages(CURRENT_USER)
-                    for a in query:
-                        print(a)
+                    for rows in query:
+                        print(rows)
                 if IS_STORE:
                     store_messages(CURRENT_USER, raw_msg)
             else:

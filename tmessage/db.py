@@ -19,7 +19,8 @@ class Message(Model):
 @MESSAGES_DB
 def grab_messages(user):
     """Grab messages from the user"""
-    cursor = MESSAGES_DB.execute_sql("SELECT sender, message FROM message where sender LIKE \'" + user +'\'')
+    cursor = MESSAGES_DB.execute_sql(
+            "SELECT sender, message FROM message where sender LIKE \'"+ user +'\'')
     return [r for r in cursor.fetchall()]
     
 @MESSAGES_DB
