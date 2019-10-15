@@ -4,7 +4,7 @@ from getpass import getpass
 import paho.mqtt.client as mqtt
 from colorama import init, deinit, Fore, Back, Style
 import tmessage.auth as auth  # auth.py
-from tmessage.db import grab_messages, store_messages  # db.py"""
+from db import *  # db.py"""
 
 
 # Initialize colorama
@@ -81,7 +81,9 @@ def main():
             if raw_msg != '':
                 MQTT_CLIENT.publish(MQTT_TOPIC, pub_msg)
                 if raw_msg == "grab":
-                    grab_messages(CURRENT_USER)
+                    query = grab_messages(CURRENT_USER)
+                    for a in query:
+                        print(a)
                 if IS_STORE:
                     store_messages(CURRENT_USER, raw_msg)
             else:

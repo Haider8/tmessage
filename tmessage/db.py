@@ -20,8 +20,7 @@ class Message(Model):
 def grab_messages(user):
     """Grab messages from the user"""
     cursor = MESSAGES_DB.execute_sql("SELECT sender, message FROM message where sender LIKE \'" + user +'\'')
-    for row in cursor.fetchall():
-       print(row[0] + " : " + row[1])
+    return [r for r in cursor.fetchall()]
     
 @MESSAGES_DB
 def store_messages(user, raw_msg):
