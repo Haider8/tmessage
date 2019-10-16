@@ -62,14 +62,14 @@ def get_encryption_key():
 def encrypt_message(message):
     """encrypt a message and returns the encrypted message"""
     key = get_encryption_key()
-    f = Fernet(key)
-    encrypted_message = f.encrypt(message)
+    fernet = Fernet(key)
+    encrypted_message = fernet.encrypt(message)
     return encrypted_message
 
 
 def decrypt_message(message):
     """decrypt an encrypted message and returns the message"""
     key = get_encryption_key()
-    f = Fernet(key)
-    decrypted_message = f.decrypt(message)
+    fernet = Fernet(key)
+    decrypted_message = fernet.decrypt(message)
     return decrypted_message
