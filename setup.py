@@ -14,7 +14,8 @@ def get_requirements():
         'peewee==3.11.2',
         'requests==2.22.0',
         'PyJWT==1.7.1',
-        'python-dotenv==0.10.3'
+        'python-dotenv==0.10.3',
+        'simple-chalk==0.1.0'
     ]
     return requirements
 
