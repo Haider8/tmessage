@@ -6,7 +6,7 @@ from colorama import init, deinit, Fore, Back, Style
 from simple_chalk import chalk
 import tmessage.auth as auth  # auth.py
 from tmessage.db import store_messages  # db.py
-from tmessage.utils import get_formatted_message
+from tmessage.utils import get_formatted_message, encrypt_message, decrypt_message
 
 # Initialize colorama
 init()
@@ -48,12 +48,12 @@ def on_message(client, userdata, message):
 
     user_name_separator_index = current_msg.find(":") + 1
     user_details = chalk.bgGreen(current_msg[:user_name_separator_index])
-    msg = current_msg[user_name_separator_index + 1:]
+    encrypted_msg = current_msg[user_name_separator_index + 3:-1]
+    msg = decrypt_message(encrypted_msg.encode()).decode()
     if user != CURRENT_USER:
         print(user_details, msg)
-        _, _, message = current_msg.partition("] ")
         if IS_STORE:
-            store_messages(user, message)
+            store_messages(user, msg)
 
 
 def main():
@@ -85,7 +85,7 @@ def main():
         while True:
             raw_msg = str(input(Back.RESET + Fore.RESET))
             formatted_msg = get_formatted_message(raw_msg)
-            pub_msg = f"[{user_name}] {displayed_name}: {formatted_msg}"
+            pub_msg = f"[{user_name}] {displayed_name}: {encrypt_message(formatted_msg.encode())}"
             if raw_msg != "":
                 MQTT_CLIENT.publish(MQTT_TOPIC, pub_msg)
                 if IS_STORE:

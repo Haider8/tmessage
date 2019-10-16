@@ -1,7 +1,7 @@
 """Utils : Methods and Class which are used for tmessage."""
 from html.parser import HTMLParser
 from simple_chalk import chalk
-
+from cryptography.fernet import Fernet
 
 # pylint: disable=W0223
 class MessageParser(HTMLParser):
@@ -48,3 +48,28 @@ def get_formatted_message(raw_message):
     parser = MessageParser()
     parser.feed(raw_message)
     return parser.message_to_show
+
+
+def get_encryption_key():
+    """get the encryption key to encrypt and decrypt.
+
+        TODO:  need to avoid static key by implementing Diffie-Hellman.
+        # Fernet.generate_key() will generate a new key
+    """
+    return b'pxry9LY9AKkgHr-Zfs7x8hkUwJSHkdKxyeuq_retZ4A='
+
+
+def encrypt_message(message):
+    """encrypt a message and returns the encrypted message"""
+    key = get_encryption_key()
+    f = Fernet(key)
+    encrypted_message = f.encrypt(message)
+    return encrypted_message
+
+
+def decrypt_message(message):
+    """decrypt an encrypted message and returns the message"""
+    key = get_encryption_key()
+    f = Fernet(key)
+    decrypted_message = f.decrypt(message)
+    return decrypted_message

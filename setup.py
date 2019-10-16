@@ -15,7 +15,8 @@ def get_requirements():
         'requests==2.22.0',
         'PyJWT==1.7.1',
         'python-dotenv==0.10.3',
-        'simple-chalk==0.1.0'
+        'simple-chalk==0.1.0',
+        'cryptography==2.7'
     ]
     return requirements
 
