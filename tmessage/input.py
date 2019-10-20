@@ -12,13 +12,14 @@ class Input:
 
     def get_input(self):
         """ Retrieve input from user with every keystroke buffered """
-        whitespaces = "                                                                         "
         while True:
             keypress = readkey()
-            if keypress == key.ENTER:
-                print('\n', end='')
+            if keypress == key.CTRL_C:
+                raise KeyboardInterrupt('Ctrl + C combination detected')
+            if keypress in (key.ENTER, key.CR):
+                print('\n\r', end='')
                 break
-            if keypress == key.CR:
+            if keypress in (key.UP, key.DOWN, key.LEFT, key.RIGHT):
                 continue
             if keypress == key.BACKSPACE:
                 self.buffer = self.buffer[:-1]
