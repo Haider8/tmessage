@@ -24,7 +24,7 @@ class Input:
                 self.buffer = self.buffer[:-1]
             else:
                 self.buffer = self.buffer + keypress
-            print("\r" + self.buffer + whitespaces + f'\033[{len(whitespaces)}D', end='')
+            print("\r\033[K" + self.buffer, end='', flush=True)
         result = str(self.buffer)
         self.buffer = ""
         return result
