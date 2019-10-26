@@ -59,6 +59,11 @@ Before you submit your Pull Request (PR) consider the following guidelines:
 
 1. Create your patch, **including appropriate test cases**.
 1. Follow our [Coding Rules](#rules).
+1. Configure `pre-commit` to catch the style related errors during commit.
+
+    ```shell
+    pre-commit install
+    ``` 
 1. Commit your changes using a descriptive commit message that follows our
   [commit message conventions](#commit). Adherence to these conventions
   is necessary.

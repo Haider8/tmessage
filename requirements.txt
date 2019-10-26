@@ -7,3 +7,4 @@ python-dotenv==0.10.3
 pylint==2.4.2
 simple-chalk==0.1.0
 cryptography==2.7
+pre-commit==1.18.3
