@@ -16,10 +16,7 @@ class Message(DB.Model):
     sender = DB.Column(DB.String(120), primary_key=True, nullable=False)
     message = DB.Column(DB.String(120), nullable=False)
     timestamp = DB.Column(DB.DateTime)
-
-    def add(self):
-        """ To few methods"""
-        print(self.sender)
+    
         
     def __repr__(self):
         return f"Message('{self.sender}','{self.message}','{self.timestamp}')"
