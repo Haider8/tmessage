@@ -1,6 +1,4 @@
 """Handles the connection to the SQLite database as well as DB interaction"""
-pip install flask
-pip install flask-sqlalchemy
 from datetime import datetime
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
