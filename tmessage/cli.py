@@ -62,6 +62,7 @@ def main():
         if auth.check_existed(CURRENT_USER):
             password = getpass(f"User {CURRENT_USER} found\nEnter password: ")
             payload = auth.authenticate(CURRENT_USER, password)
+            new = 'yes'
         else:
             print(f"Welcome {CURRENT_USER} to tmessage!\nPlease register...")
             displayed_name = input("Enter your name used for display: ")
@@ -74,6 +75,7 @@ def main():
             payload = auth.register(
                 CURRENT_USER, displayed_name, password, password_confirm
             )
+            new = 'no'
         print("User Authorized")
         user_name = payload["user_name"]
         displayed_name = payload["displayed_name"]
@@ -89,7 +91,7 @@ def main():
             if raw_msg != "":
                 MQTT_CLIENT.publish(MQTT_TOPIC, pub_msg)
                 if IS_STORE:
-                    store_messages(CURRENT_USER, formatted_msg)
+                    store_messages(CURRENT_USER, formatted_msg, new)
             else:
                 print(Back.WHITE + Fore.RED + "Can't send empty message", end="\n")
     except KeyboardInterrupt:
