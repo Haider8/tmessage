@@ -1,12 +1,10 @@
 colorama==0.4.1
 paho-mqtt==1.4.0
 requests==2.22.0
-peewee==3.11.2
 PyJWT==1.7.1
 python-dotenv==0.10.3
 simple-chalk==0.1.0
 pre-commit==1.18.3
 flask==1.1.1
 Flask-SQLAlchemy==2.4.1
-pylint-flask==0.6
-flake8==3.7.8
+
