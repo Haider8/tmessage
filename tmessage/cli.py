@@ -59,6 +59,7 @@ def on_message(client, userdata, message):
 def main():
     """ Register a new User or Authenticates the already registered User to send message """
     try:
+        new = ''
         if auth.check_existed(CURRENT_USER):
             password = getpass(f"User {CURRENT_USER} found\nEnter password: ")
             payload = auth.authenticate(CURRENT_USER, password)
