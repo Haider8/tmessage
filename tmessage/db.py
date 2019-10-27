@@ -27,6 +27,6 @@ def store_messages(user, raw_msg, new):
         app.config['SQLALCHEMY_BINDS'][User] = f'sqlite:///{User}.db'
     time = datetime.now()
     db.create_all()
-    x = MessageDatabase(sender=User, message=raw_msg, timestamp=time)
-    db.session.add(x)
+    Data = MessageDatabase(sender=User, message=raw_msg, timestamp=time)
+    db.session.add(Data)
     db.session.commit()
