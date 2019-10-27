@@ -11,8 +11,6 @@ DB = SQLAlchemy(APP)
 
 
 class Message(DB.Model):
-    def fun(user):
-        __bind_key__ = user
     sender = DB.Column(DB.String(120), primary_key=True, nullable=False)
     message = DB.Column(DB.String(120), nullable=False)
     timestamp = DB.Column(DB.DateTime)
@@ -21,12 +19,12 @@ class Message(DB.Model):
         return f"Message('{self.sender}','{self.message}','{self.timestamp}')"
 
 
-def store_messages(user, raw_msg, new):
-    """Store a message sent by the indicated user in the database"""
-    if new == 'yes':
-        APP.config['SQLALCHEMY_BINDS'][user] = f'sqlite:///{user}.db'
-
-    Message.fun(user)
+def new_database(user):
+    APP.config['SQLALCHEMY_BINDS'][user] = f'sqlite:///{user}.db'
+    
+    
+def store_messages(user, raw_msg):
+    Message.__bind_key__ = user
     time = datetime.now()
     DB.create_all()
     data = Message(sender=user, message=raw_msg, timestamp=time)
