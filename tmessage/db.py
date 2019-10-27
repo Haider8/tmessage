@@ -3,12 +3,15 @@ from datetime import datetime
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///main.db'
-app.config['SQLALCHEMY_BINDS'] = { 'we' : 'sqlite:///we.db'}
+app.config['SQLALCHEMY_BINDS'] = {}
 db = SQLAlchemy(app)
 
 User = ''
+
+
 class MessageDatabase(db.Model):
     __bind_key__ = User 
     sender = db.Column(db.String(120), primary_key=True, nullable=False)
