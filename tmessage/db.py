@@ -11,6 +11,7 @@ DB = SQLAlchemy(APP)
 
 
 class Message(DB.Model):
+    # pylint: disable=all
     """ Database where messages will be stored """
     sender = DB.Column(DB.String(120), primary_key=True, nullable=False)
     message = DB.Column(DB.String(120), nullable=False)
@@ -30,6 +31,7 @@ def new_database(user):
 
 
 def store_messages(user, raw_msg):
+    # pylint: disable=all
     """ function that stores messages from the particular user """
     Message.__bind_key__ = user
     time = datetime.now()
