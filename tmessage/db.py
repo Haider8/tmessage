@@ -4,32 +4,32 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///main.db'
-app.config['SQLALCHEMY_BINDS'] = {}
-db = SQLAlchemy(app)
+APP = Flask(__name__)
+APP.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///main.db'
+APP.config['SQLALCHEMY_BINDS'] = {}
+DB = SQLAlchemy(APP)
 
-User = ''
+USER = ''
 
 
-class MessageDatabase(db.Model):
-    __bind_key__ = User 
-    sender = db.Column(db.String(120), primary_key=True, nullable=False)
-    message = db.Column(db.String(120), nullable=False)
-    timestamp = db.Column(db.DateTime)
+class Message(DB.Model):
+    __bind_key__ = USER
+    sender = DB.Column(DB.String(120), primary_key=True, nullable=False)
+    message = DB.Column(DB.String(120), nullable=False)
+    timestamp = DB.Column(DB.DateTime)
 
     def __repr__(self):
-        return f"MessageDatabase('{self.sender}','{self.message}','{self.timestamp}')"
+        return f"Message('{self.sender}','{self.message}','{self.timestamp}')"
 
 
 def store_messages(user, raw_msg, new):
-    User = user
+    USER = user
     """Store a message sent by the indicated user in the database"""
 
     if new == 'yes':
-        app.config['SQLALCHEMY_BINDS'][User] = f'sqlite:///{User}.db'
+        APP.config['SQLALCHEMY_BINDS'][USER] = f'sqlite:///{USER}.db'
     time = datetime.now()
-    db.create_all()
-    Data = MessageDatabase(sender=User, message=raw_msg, timestamp=time)
-    db.session.add(Data)
-    db.session.commit()
+    DB.create_all()
+    data = Message(sender=USER, message=raw_msg, timestamp=time)
+    DB.session.add(data)
+    DB.session.commit()
