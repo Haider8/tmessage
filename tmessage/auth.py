@@ -5,7 +5,9 @@ import requests as r
 import dotenv as env
 env.load_dotenv()
 
-API_BASE_URL = os.environ.get("TMESSAGE_API_URL") or "https://peaceful-waters-15584.herokuapp.com"
+API_BASE_URL_A = os.environ.get("TMESSAGE_API_URL")
+API_BASE_URL_B = "https://peaceful-waters-15584.herokuapp.com"
+API_BASE_URL = API_BASE_URL_B or API_BASE_URL_A
 API_USER_URL = f'{API_BASE_URL}/api/user'
 
 
