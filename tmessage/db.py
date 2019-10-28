@@ -19,7 +19,7 @@ def database(user, raw_msg, new):
             database = MESSAGES_DB
 
 
-    if new = True:
+    if new == True: # pylint: disable=singleton-comparison
         MESSAGES_DB.create_tables([Message])
     time = datetime.now()
     Message.create(sender=user, message=raw_msg, timestamp=time)
