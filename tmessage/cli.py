@@ -5,7 +5,7 @@ import paho.mqtt.client as mqtt
 from colorama import init, deinit, Fore, Back, Style
 from simple_chalk import chalk
 import tmessage.auth as auth  # auth.py
-from tmessage.db import store_messages, new_database  # db.py
+from tmessage.db import database # db.py
 from tmessage.utils import get_formatted_message
 
 # Initialize colorama
@@ -36,6 +36,7 @@ BROKER_PORT = ARGS.port or 1883
 
 MQTT_CLIENT = mqtt.Client()
 CURRENT_USER = ARGS.user
+new = False
 
 
 def on_message(client, userdata, message):
@@ -53,7 +54,7 @@ def on_message(client, userdata, message):
         print(user_details, msg)
         _, _, message = current_msg.partition("] ")
         if IS_STORE:
-            store_messages(user, message)
+            database(user, message, new)
 
 
 def main():
@@ -74,7 +75,7 @@ def main():
             payload = auth.register(
                 CURRENT_USER, displayed_name, password, password_confirm
             )
-            new_database(CURRENT_USER)
+            new = True
         print("User Authorized")
         user_name = payload["user_name"]
         displayed_name = payload["displayed_name"]
@@ -90,7 +91,7 @@ def main():
             if raw_msg != "":
                 MQTT_CLIENT.publish(MQTT_TOPIC, pub_msg)
                 if IS_STORE:
-                    store_messages(CURRENT_USER, formatted_msg)
+                    database(CURRENT_USER, formatted_msg, new)
             else:
                 print(Back.WHITE + Fore.RED + "Can't send empty message", end="\n")
     except KeyboardInterrupt:
