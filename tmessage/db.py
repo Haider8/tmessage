@@ -6,7 +6,7 @@ from peewee import CharField, DateTimeField, Model, SqliteDatabase
 
 def database(user, raw_msg, new):
     """user for sender, raw_msg for message, new if the user is new"""
-    MESSAGES_DB = SqliteDatabase(f'{user}.db')# pylint: disable=invalid_name
+    MESSAGES_DB = SqliteDatabase(f'{user}.db')# pylint: disable=invalid-name
 
 
     class Message(Model):
