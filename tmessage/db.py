@@ -6,7 +6,7 @@ from peewee import CharField, DateTimeField, Model, SqliteDatabase
 
 def database(user, raw_msg, new):
     """user for sender, raw_msg for message, new if the user is new"""
-    MESSAGES_DB = SqliteDatabase(f'{user}.db')
+    MESSAGES_DB = SqliteDatabase(f'{user}.db')# pylint: disable=invalid_name
 
 
     class Message(Model):
@@ -19,8 +19,7 @@ def database(user, raw_msg, new):
             database = MESSAGES_DB
 
 
-    if new == True:
+    if new = True:
         MESSAGES_DB.create_tables([Message])
-    MESSAGES_DB.connect()
     time = datetime.now()
     Message.create(sender=user, message=raw_msg, timestamp=time)
