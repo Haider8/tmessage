@@ -1,38 +1,26 @@
 """Handles the connection to the SQLite database as well as DB interaction"""
 from datetime import datetime
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+
+from peewee import CharField, DateTimeField, Model, SqliteDatabase
 
 
-APP = Flask(__name__)
-APP.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///main.db'
-APP.config['SQLALCHEMY_BINDS'] = {}
-DB = SQLAlchemy(APP)
+def database(user, raw_msg, new):
+    """user for sender, raw_msg for message, new if the user is new"""
+    MESSAGES_DB = SqliteDatabase(f'{user}.db')
 
 
-class Message(DB.Model):
-    # pylint: disable=all
-    """ Database where messages will be stored """
-    sender = DB.Column(DB.String(120), primary_key=True, nullable=False)
-    message = DB.Column(DB.String(120), nullable=False)
-    timestamp = DB.Column(DB.DateTime)
-    
-        
-    def __repr__(self):
-        return f"Message('{self.sender}','{self.message}','{self.timestamp}')"
+    class Message(Model):
+        """Message table - keeps track of message sent and received"""
+        sender = CharField()
+        message = CharField()
+        timestamp = DateTimeField()
+
+        class Meta:  # pylint: disable=missing-class-docstring,too-few-public-methods
+            database = MESSAGES_DB
 
 
-def new_database(user):
-    """ creates new database for new users """
-    APP.config['SQLALCHEMY_BINDS'][user] = f'sqlite:///{user}.db'
-
-
-def store_messages(user, raw_msg):
-    # pylint: disable=all
-    """ function that stores messages from the particular user """
-    Message.__bind_key__ = user
+    if new == True:
+        MESSAGES_DB.create_tables([Message])
+    MESSAGES_DB.connect()
     time = datetime.now()
-    DB.create_all()
-    data = Message(sender=user, message=raw_msg, timestamp=time)
-    DB.session.add(data)
-    DB.session.commit()
+    Message.create(sender=user, message=raw_msg, timestamp=time)
