@@ -36,7 +36,6 @@ BROKER_PORT = ARGS.port or 1883
 
 MQTT_CLIENT = mqtt.Client()
 CURRENT_USER = ARGS.user
-new = False
 
 
 def on_message(client, userdata, message):
@@ -54,7 +53,7 @@ def on_message(client, userdata, message):
         print(user_details, msg)
         _, _, message = current_msg.partition("] ")
         if IS_STORE:
-            database(user, message, new)
+            database(user, message, False)
 
 
 def main():
@@ -63,6 +62,7 @@ def main():
         if auth.check_existed(CURRENT_USER):
             password = getpass(f"User {CURRENT_USER} found\nEnter password: ")
             payload = auth.authenticate(CURRENT_USER, password)
+            new = False
         else:
             print(f"Welcome {CURRENT_USER} to tmessage!\nPlease register...")
             displayed_name = input("Enter your name used for display: ")
