@@ -1,3 +1,4 @@
+
 colorama==0.4.1
 paho-mqtt==1.4.0
 requests==2.22.0
@@ -7,3 +8,4 @@ python-dotenv==0.10.3
 pylint==2.4.2
 simple-chalk==0.1.0
 pre-commit==1.18.3
+
