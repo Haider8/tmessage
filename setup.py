@@ -15,6 +15,7 @@ def get_requirements():
         'PyJWT==1.7.1',
         'python-dotenv==0.10.3',
         'simple-chalk==0.1.0',
+        'readchar==2.0.1'
     ]
     return requirements
 
