@@ -6,7 +6,7 @@ from colorama import init, deinit, Fore, Back, Style
 from simple_chalk import chalk
 import tmessage.auth as auth  # auth.py
 from tmessage.db import store_messages  # db.py
-from tmessage.utils import get_formatted_message, encrypt_message, decrypt_message #utils.py
+from tmessage.utils import get_formatted_message, encrypt_message, decrypt_message  # utils.py
 from tmessage.input import Input  # input.py
 
 # Initialize colorama
