@@ -6,7 +6,8 @@ from colorama import init, deinit, Fore, Back, Style
 from simple_chalk import chalk
 import tmessage.auth as auth  # auth.py
 from tmessage.db import store_messages  # db.py
-from tmessage.utils import get_formatted_message, encrypt_message, decrypt_message
+from tmessage.utils import get_formatted_message, encrypt_message, decrypt_message #utils.py
+from tmessage.input import Input  # input.py
 
 # Initialize colorama
 init()
@@ -37,6 +38,7 @@ BROKER_PORT = ARGS.port or 1883
 MQTT_CLIENT = mqtt.Client()
 CURRENT_USER = ARGS.user
 
+MESSAGE_INPUT = Input()
 
 def on_message(client, userdata, message):
     # pylint: disable=unused-argument
@@ -51,7 +53,9 @@ def on_message(client, userdata, message):
     encrypted_msg = current_msg[user_name_separator_index + 3:-1]
     msg = decrypt_message(encrypted_msg.encode()).decode()
     if user != CURRENT_USER:
-        print(user_details, msg)
+        print('\r\033[K' + user_details + " " + msg)
+        print('\r\033[K' + MESSAGE_INPUT.get_buffer(), end='', flush=True)
+        _, _, message = current_msg.partition("] ")
         if IS_STORE:
             store_messages(user, msg)
 
@@ -83,7 +87,7 @@ def main():
         MQTT_CLIENT.subscribe(MQTT_TOPIC)
         MQTT_CLIENT.loop_start()
         while True:
-            raw_msg = str(input(Back.RESET + Fore.RESET))
+            raw_msg = MESSAGE_INPUT.get_input()
             formatted_msg = get_formatted_message(raw_msg)
             pub_msg = f"[{user_name}] {displayed_name}: {encrypt_message(formatted_msg.encode())}"
             if raw_msg != "":
